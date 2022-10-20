@@ -1,13 +1,20 @@
 import React, { useState } from 'react'
 import { MoneyProps } from '../types/money'
+import { BalanceProps } from '../types/balance'
 
-const Money = ({option, list, setList}: MoneyProps) => {
+const Money = ({option, list, setList}: MoneyProps, {balance}: BalanceProps) => {
     const [title, setTitle] = useState("")
     const [amount, setAmount] = useState(0)
     const [date, setDate] = useState("")
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        setList([...list, {amount, title, date, id:Date.now()}])
+        // if (option === "Expense"){
+        //     if (amount > balance){
+                setList([{amount, date, title, id: Date.now()}, ...list])
+        //     }
+        // }else{
+        //     alert("Insufficient funds")
+        // } DOESN'T WORK 
     }
   return (
     <div>

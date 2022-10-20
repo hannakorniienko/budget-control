@@ -4,9 +4,8 @@ export interface MoneyItem{
     date: string,
     id?: number
 }
-
 export interface MoneyProps{
     option: "Income"|"Expense",
     list: MoneyItem[],
-    setList: (value: MoneyItem[]) => void
+    setList: React.Dispatch<React.SetStateAction<MoneyItem[]>>
 }
