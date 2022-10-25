@@ -1,18 +1,26 @@
 import React, { useState } from 'react'
+import { TextField, Box} from '@mui/material'
+
 import { savingProps } from '../types/saving'
 
 const Saving = ({saving}: savingProps) => {
   const [target, setTarget] = useState(0)
+  const progress = (saving/target*100) || 0
   return (
-    <div>
+    <Box>
       <p>Current saving: {saving}</p>
       <p>Current target: {target}</p>
+      <p>Progress: {progress}%</p>
       <progress value={saving} max={target}/>
-      <form>
-      <label htmlFor="">Set target</label>
-      <input type="number" name='target' id='target' onChange={(e) => setTarget(Number(e.target.value))}/>
-      </form>
-    </div>
+      <Box
+      component="form">
+      <TextField 
+        label="Set target"
+        type="number" 
+        name='target'
+        onChange={(e) => setTarget(Number(e.target.value))}/>
+      </Box>
+    </Box>
   )
 }
 

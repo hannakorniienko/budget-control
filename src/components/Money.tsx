@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
+import { Box, TextField, Button, List, ListItem, styled } from '@mui/material'
+import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+
 import { MoneyProps } from '../types/money'
 import { BalanceProps } from '../types/balance'
+import '../styles/money.css'
 
 const Money = ({option, list, setList}: MoneyProps, {balance}: BalanceProps) => {
     const [title, setTitle] = useState("")
@@ -15,23 +19,46 @@ const Money = ({option, list, setList}: MoneyProps, {balance}: BalanceProps) => 
         }
         setList([{amount, date, title, id: Date.now()}, ...list])
     }
-  return (
-    <div>
-        <form onSubmit={(e) => onSubmit(e)}>
-            <div>
-                <label htmlFor="title">Title of {option}</label>
-                <input type="text" name="title" id="title" onChange={(e)=> setTitle(e.target.value)} />
-            </div>
-            <div>
-                <label htmlFor="amount">Amount of {option}</label>
-                <input type="number" name="amount" id="amount" onChange={(e)=> setAmount(Number(e.target.value))} />
-            </div>
-            <div>
-                <label htmlFor="date">Date of {option}</label>
-                <input type="date" name="date" id="date" onChange={(e)=> setDate(e.target.value)} />
-            </div>
-            <button type='submit'>Save</button>
-        </form>
+    return (
+        <Box
+            component="form"
+            autoComplete="off"
+            onSubmit={(e) => onSubmit(e)}
+            alignItems="flex-start"
+            display="flex"
+            flexDirection="column"
+            gap={2}
+        >
+                <TextField
+                    required
+                    label={`Title of ${option}`}
+                    onChange={(e)=> setTitle(e.target.value)}
+                    value={title}
+                />
+                <TextField
+                    required
+                    label={`Amount of ${option}`}
+                    onChange={(e)=> setAmount(Number(e.target.value))}
+                    value={amount}
+                    type="number"
+                />
+                <TextField
+                    required
+                    label={`Date of ${option}`}
+                    onChange={(e)=> setDate(e.target.value)}
+                    value={date}
+                    type="date"
+                    InputLabelProps={{
+                        shrink: true,
+                      }}
+                />
+                <Button 
+                    type='submit'
+                    startIcon={<AccountBalanceWalletIcon/>}
+                    variant="contained"
+                    color="primary"
+                    className='save-btn'
+                >Save</Button>
         <ul>
             {
                 list.length > 0 && list.map(
@@ -41,7 +68,7 @@ const Money = ({option, list, setList}: MoneyProps, {balance}: BalanceProps) => 
                 )
             }
         </ul>
-    </div>
+        </Box>
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Box, Grid } from '@mui/material'
 
-import './App.css';
+import './styles/App.css';
 import Money from './components/Money';
 import Balance from './components/Balance';
 import Saving from './components/Saving';
@@ -17,12 +18,20 @@ function App() {
     setBalance(totalIncome - totalExpense - saving)
   }, [incomes, expenses, saving])
   return (
-    <div className="App">
-      <Money option='Income' list={incomes} setList={setIncomes} />
-      <Money option='Expense' list={expenses} setList={setExpenses} />
-      <Saving saving={saving} />
-      <Balance balance={balance} setSaving={setSaving} />
-    </div>
+    <Box className="App" padding={3}>
+      <Grid container spacing={2}>
+        <Grid item md={4} xs={6}>
+          <Money option='Income' list={incomes} setList={setIncomes} />
+        </Grid>
+        <Grid item md={4} xs={6}>
+          <Money option='Expense' list={expenses} setList={setExpenses} />
+        </Grid>
+        <Grid item md={4} xs={12}>
+          <Saving saving={saving} />
+        </Grid>
+      </Grid>
+      <Balance balance={balance} setSaving={setSaving}/>
+    </Box>
   );
 }
 
