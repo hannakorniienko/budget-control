@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { TextField, Button } from '@mui/material'
 import SavingsIcon from '@mui/icons-material/Savings';
+import { Stack } from '@mui/system'
 
 import '../styles/balance.css'
 import { BalanceProps } from '../types/balance'
-import { Stack } from '@mui/system'
+
 
 const Balance = ({balance, setSaving}: BalanceProps) => {
   const [amount, setAmount] = useState(0)

@@ -3,10 +3,10 @@ import { Box, TextField, Button, List, ListItem, styled } from '@mui/material'
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 
 import { MoneyProps } from '../types/money'
-import { BalanceProps } from '../types/balance'
+import MoneyTable from './MoneyTable';
 import '../styles/money.css'
 
-const Money = ({option, list, setList}: MoneyProps, {balance}: BalanceProps) => {
+const Money = ({option, list, balance, setList}: MoneyProps) => {
     const [title, setTitle] = useState("")
     const [amount, setAmount] = useState(0)
     const [date, setDate] = useState("")
@@ -15,7 +15,8 @@ const Money = ({option, list, setList}: MoneyProps, {balance}: BalanceProps) => 
         if (option === "Expense"){
             if (amount > balance){
                 alert("Insufficient funds")
-            }
+                return
+            } 
         }
         setList([{amount, date, title, id: Date.now()}, ...list])
     }
@@ -58,16 +59,8 @@ const Money = ({option, list, setList}: MoneyProps, {balance}: BalanceProps) => 
                     variant="contained"
                     color="primary"
                     className='save-btn'
-                >Save</Button>
-        <ul>
-            {
-                list.length > 0 && list.map(
-                    item => (
-                        <li key={item.id}> {item.title}, {item.amount}, {item.date}</li>
-                    )
-                )
-            }
-        </ul>
+                >Add</Button>
+        <MoneyTable list={list} />
         </Box>
   )
 }

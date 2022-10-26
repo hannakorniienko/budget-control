@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
 import { TextField, Box} from '@mui/material'
 
+import '../styles/saving.css'
 import { savingProps } from '../types/saving'
 
 const Saving = ({saving}: savingProps) => {
   const [target, setTarget] = useState(0)
-  const progress = (saving/target*100) || 0
+  const progress = (Math.round(saving/target*100)) || 0
   return (
     <Box>
       <p>Current saving: {saving}</p>
