@@ -12,6 +12,9 @@ const Money = ({option, list, balance, setList}: MoneyProps) => {
     const [date, setDate] = useState("")
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setTitle("")
+        setAmount(0)
+        setDate("")
         if (option === "Expense"){
             if (amount > balance){
                 alert("Insufficient funds")
