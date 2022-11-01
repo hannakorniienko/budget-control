@@ -35,14 +35,6 @@ import '../styles/table.css'
       border: 1px solid #E0E3E7};
       border-radius: 50px;
       background-color: transparent;
-  
-      &:hover {
-        background-color: #F3F6F9};
-      }
-  
-      &:focus {
-        outline: 1px solid #A5D8FF};
-      }
     }
   
     & .${classes.displayedRows} {
@@ -65,21 +57,12 @@ import '../styles/table.css'
       border: transparent;
       border-radius: 2px;
       background-color: transparent;
-  
-      &:hover {
-        background-color: #F3F6F9};
-      }
-  
-      &:focus {
-        outline: 1px solid #A5D8FF};
-      }
-    }
-    `,
+      `,
   );
   
     const MoneyTable = ({list}: {list: MoneyItem[]}) => {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(4);
   
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
