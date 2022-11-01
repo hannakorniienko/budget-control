@@ -4,8 +4,10 @@ import TablePaginationUnstyled, {
   tablePaginationUnstyledClasses as classes,
 } from '@mui/base/TablePaginationUnstyled';
 
-import { MoneyItem } from '../types/money'
+import { MoneyItem, MoneyTableProps } from '../types/money'
 import '../styles/table.css'
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
   
  
   const CustomTablePagination = styled(TablePaginationUnstyled)(
@@ -60,7 +62,8 @@ import '../styles/table.css'
       `,
   );
   
-    const MoneyTable = ({list}: {list: MoneyItem[]}) => {
+    const MoneyTable = ({option} : MoneyTableProps) => {
+    const list = useSelector((state: RootState) => option === "Income" ? state.incomeReducer : state.expenseReducer)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(4);
   

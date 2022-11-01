@@ -7,8 +7,8 @@ const incomeSlicer = createSlice({
     name: "incomes",
     initialState,
     reducers: {
-        addIncome: () => {
-
+        addIncome: (state, action) => {
+            state.push(action.payload)
         },
         deleteIncome: () => {
             
@@ -17,4 +17,5 @@ const incomeSlicer = createSlice({
 })
 
 const incomeReducer = incomeSlicer.reducer
+export const {addIncome, deleteIncome} = incomeSlicer.actions
 export default incomeReducer

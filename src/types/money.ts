@@ -10,3 +10,6 @@ export interface MoneyProps{
     setList: React.Dispatch<React.SetStateAction<MoneyItem[]>>,
     balance: number
 }
+export interface MoneyTableProps {
+    option: string
+}

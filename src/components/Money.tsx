@@ -5,23 +5,35 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { MoneyProps } from '../types/money'
 import MoneyTable from './MoneyTable';
 import '../styles/money.css'
+import { useDispatch } from 'react-redux';
+import { addExpense } from '../redux/reducers/expenses';
+import { addIncome } from '../redux/reducers/incomes';
 
-const Money = ({option, list, balance, setList}: MoneyProps) => {
+const Money = ({option}: MoneyProps) => {
     const [title, setTitle] = useState("")
     const [amount, setAmount] = useState(0)
     const [date, setDate] = useState("")
+    const dispatch = useDispatch()
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setTitle("")
         setAmount(0)
         setDate("")
         if (option === "Expense"){
-            if (amount > balance){
-                alert("Insufficient funds")
-                return
-            } 
+        //     {
+        //     if (amount > balance){
+        //         alert("Insufficient funds")
+        //         return
+        //     } 
+        // }
+            dispatch(addExpense({
+                title, amount, date, id: Date.now()
+            }))
+        }else {
+            dispatch(addIncome({
+                title, amount, date, id: Date.now()
+            }))
         }
-        setList([{amount, date, title, id: Date.now()}, ...list])
     }
     return (
         <Box
@@ -63,7 +75,7 @@ const Money = ({option, list, balance, setList}: MoneyProps) => {
                     color="primary"
                     className='save-btn'
                 >Add</Button>
-        <MoneyTable list={list} />
+        <MoneyTable option={option} />
         </Box>
   )
 }

@@ -10,16 +10,6 @@ import { addExpense } from '../redux/reducers/expenses'
 const Saving = ({saving}: savingProps) => {
   const [target, setTarget] = useState(0)
   const dispatch = useDispatch()
-  // dispatch(addExpense)
-  useEffect(() => {
-      dispatch(addExpense({
-          title: "test",
-          amount: 12,
-          date: "test"
-      }))
-  }, [])
-  const incomes = useSelector((state: any) => state.incomeReducer)
-  const expenses = useSelector((state: any) => state.expenseReducer)
   useEffect(() =>{
   }, [])
   const progress = (Math.round(saving/target*100)) || 0
