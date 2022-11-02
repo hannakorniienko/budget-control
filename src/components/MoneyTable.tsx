@@ -6,8 +6,10 @@ import TablePaginationUnstyled, {
 
 import { MoneyItem, MoneyTableProps } from '../types/money'
 import '../styles/table.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import { deleteIncome } from '../redux/reducers/incomes';
+import { deleteExpense } from '../redux/reducers/expenses';
   
  
   const CustomTablePagination = styled(TablePaginationUnstyled)(
@@ -66,6 +68,14 @@ import { RootState } from '../redux/store';
     const list = useSelector((state: RootState) => option === "Income" ? state.incomeReducer : state.expenseReducer)
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(4);
+    const dispatch = useDispatch()
+    const onDelete = (id: number) => {
+      if (option === "Income"){
+          dispatch(deleteIncome(id))
+        }else {
+          dispatch(deleteExpense(id))
+        }
+    }
   
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -92,18 +102,16 @@ import { RootState } from '../redux/store';
             <th>Date</th>
             <th>Title</th>
             <th>Amount</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {list.map(item =>  (
             <tr key={item.id} >
-               <td>{item.date}</td>
-              <td style={{ width: 120 }} align="right">
-              {item.title}
-              </td>
-              <td style={{ width: 120 }} align="right">
-              {item.amount}
-              </td>
+              <td>{item.date}</td>
+              <td style={{ width: 120 }} align="right">{item.title}</td>
+              <td style={{ width: 120 }} align="right">{item.amount}</td>
+              <td onClick={() => onDelete(item.id)} style={{ width: 120 }} align="right">Delete</td>
             </tr>
           ))}
             {emptyRows > 0 && (
@@ -116,7 +124,7 @@ import { RootState } from '../redux/store';
           <tr>
             <CustomTablePagination
               rowsPerPageOptions={[4, 8, 12]}
-              colSpan={3}
+              colSpan={4}
               count={list.length}
               rowsPerPage={rowsPerPage}
               page={page}

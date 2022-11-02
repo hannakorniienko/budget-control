@@ -2,7 +2,7 @@ export interface MoneyItem{
     title: string,
     amount: number,
     date: string,
-    id?: number
+    id: number
 }
 export interface MoneyProps{
     option: "Income"|"Expense",
