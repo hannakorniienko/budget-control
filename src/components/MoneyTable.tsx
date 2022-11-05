@@ -8,8 +8,10 @@ import { MoneyItem, MoneyTableProps } from '../types/money'
 import '../styles/table.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
-import { deleteIncome } from '../redux/reducers/incomes';
+import { deleteIncome, sortAmount } from '../redux/reducers/incomes';
 import { deleteExpense } from '../redux/reducers/expenses';
+import { useAppDispatch, useAppSelector } from '../hooks/ReduxHooks';
+import { useState } from 'react';
   
  
   const CustomTablePagination = styled(TablePaginationUnstyled)(
@@ -65,17 +67,19 @@ import { deleteExpense } from '../redux/reducers/expenses';
   );
   
     const MoneyTable = ({option} : MoneyTableProps) => {
-    const list = useSelector((state: RootState) => option === "Income" ? state.incomeReducer : state.expenseReducer)
-    const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(4);
-    const dispatch = useDispatch()
-    const onDelete = (id: number) => {
+    const list = useAppSelector(state => option === "Income" ? state.incomeReducer : state.expenseReducer)
+    const [search, setSearch] = useState("")
+    const tempList = list.filter((item) => item.title.includes(search))
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(4);
+    const dispatch = useAppDispatch()
+    const onDelete = (index: number) => {
       if (option === "Income"){
-          dispatch(deleteIncome(id))
+          dispatch(deleteIncome(index))
         }else {
-          dispatch(deleteExpense(id))
+          dispatch(deleteExpense(index))
         }
-    }
+      }
   
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -94,19 +98,23 @@ import { deleteExpense } from '../redux/reducers/expenses';
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
     };
+    
+
   return(
     <div>
+      <label htmlFor="search">Search by title of {option}</label>
+      <input type="text" id="serch" value={search} onChange={(e) => setSearch(e.target.value)} />
       <table aria-label="custom pagination table">
         <thead>
           <tr>
             <th>Date</th>
             <th>Title</th>
-            <th>Amount</th>
+            <th onClick={() => dispatch(sortAmount())}>Amount</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          {list.map(item =>  (
+          {tempList.map((item, index) => (
             <tr key={item.id} >
               <td>{item.date}</td>
               <td style={{ width: 120 }} align="right">{item.title}</td>

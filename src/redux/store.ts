@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import incomeReducer from "./reducers/incomes";
-import expenseReducer from "./reducers/expenses";
+import { rootReducer } from "./reducers";
 
 const store = configureStore({
-    reducer: {
-        incomeReducer,
-        expenseReducer
-    }
+    reducer: rootReducer
 })
+
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+    module.hot.accept('./reducers', () => store.replaceReducer(rootReducer))
+  }
 
 export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch

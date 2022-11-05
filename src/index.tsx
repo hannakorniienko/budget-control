@@ -11,12 +11,19 @@ import store from './redux/store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
-root.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
-  </Provider>
-);
+const renderApp = () =>{
+  root.render(
+    <Provider store={store}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </Provider>
+  );
+}
+
+if (process.env.NODE_ENV !== 'production' && module.hot) {
+  module.hot.accept('./App', renderApp)
+}
+renderApp()
 
 reportWebVitals();

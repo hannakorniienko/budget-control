@@ -21,10 +21,10 @@ function App() {
     <Box className="App" padding={3}>
       <Grid container spacing={2}>
         <Grid item md={4} xs={12}>
-          <Money option='Income' list={incomes} setList={setIncomes} balance={balance} />
+          <Money option='Income' balance={balance} />
         </Grid>
         <Grid item md={4} xs={12}>
-          <Money option='Expense' list={expenses} setList={setExpenses} balance={balance} />
+          <Money option='Expense' balance={balance} />
         </Grid>
         <Grid item md={4} xs={12}>
           <Saving saving={saving} />

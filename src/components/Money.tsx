@@ -5,27 +5,27 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { MoneyProps } from '../types/money'
 import MoneyTable from './MoneyTable';
 import '../styles/money.css'
-import { useDispatch } from 'react-redux';
 import { addExpense } from '../redux/reducers/expenses';
 import { addIncome } from '../redux/reducers/incomes';
+import { useAppDispatch } from '../hooks/ReduxHooks';
 
-const Money = ({option}: MoneyProps) => {
+const Money = ({option, balance}: MoneyProps) => {
     const [title, setTitle] = useState("")
     const [amount, setAmount] = useState(0)
     const [date, setDate] = useState("")
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setTitle("")
         setAmount(0)
         setDate("")
         if (option === "Expense"){
-        //     {
-        //     if (amount > balance){
-        //         alert("Insufficient funds")
-        //         return
-        //     } 
-        // }
+            {
+            if (amount > balance){
+                alert("Insufficient funds")
+                return
+            } 
+        }
             dispatch(addExpense({
                 title, amount, date, id: Date.now()
             }))
