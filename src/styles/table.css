@@ -27,4 +27,10 @@ table {
     background-color: #1976d2;
   }
 
+  #search_bar {
+    display: flex;
+    padding: 10px 0px;
+    justify-content: space-between;
+  }
+
   

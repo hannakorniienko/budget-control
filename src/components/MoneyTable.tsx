@@ -102,8 +102,10 @@ import { useState } from 'react';
 
   return(
     <div>
-      <label htmlFor="search">Search by title of {option}</label>
-      <input type="text" id="serch" value={search} onChange={(e) => setSearch(e.target.value)} />
+      <div id='search_bar'>
+        <label htmlFor="search">Search by title of {option}</label>
+        <input type="text" id="serch" value={search} onChange={(e) => setSearch(e.target.value)} />
+      </div>
       <table aria-label="custom pagination table">
         <thead>
           <tr>
