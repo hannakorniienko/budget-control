@@ -98,9 +98,8 @@ import { useState } from 'react';
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
     };
-    
 
-  return(
+    return(
     <div>
       <div id='search_bar'>
         <label htmlFor="search">Search by title of {option}</label>
