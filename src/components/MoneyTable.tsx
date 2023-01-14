@@ -12,61 +12,77 @@ import { deleteIncome, sortAmount } from '../redux/reducers/incomes';
 import { deleteExpense } from '../redux/reducers/expenses';
 import { useAppDispatch, useAppSelector } from '../hooks/ReduxHooks';
 import { useState } from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, useTheme } from '@mui/material';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
+import FirstPageIcon from '@mui/icons-material/FirstPage';
+import LastPageIcon from '@mui/icons-material/LastPage';
   
- 
-  const CustomTablePagination = styled(TablePaginationUnstyled)(
-    () => `
-    & .${classes.spacer} {
-      display: none;
-    }
-  
-    & .${classes.toolbar}  {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 10px;
-  
-      @media (min-width: 768px) {
-        flex-direction: row;
-        align-items: center;
-      }
-    }
-  
-    & .${classes.selectLabel} {
-      margin: 0;
-    }
-  
-    & .${classes.select}{
-      padding: 2px;
-      border: 1px solid #E0E3E7};
-      border-radius: 50px;
-      background-color: transparent;
-    }
-  
-    & .${classes.displayedRows} {
-      margin: 0;
-  
-      @media (min-width: 768px) {
-        margin-left: auto;
-      }
-    }
-  
-    & .${classes.actions} {
-      padding: 2px;
-      border: 1px solid #E0E3E7};
-      border-radius: 50px;
-      text-align: center;
-    }
-  
-    & .${classes.actions} > button {
-      margin: 0 8px;
-      border: transparent;
-      border-radius: 2px;
-      background-color: transparent;
-      `,
+interface TablePaginationActionsProps {
+  count: number;
+  page: number;
+  rowsPerPage: number;
+  onPageChange: (
+    event: React.MouseEvent<HTMLButtonElement>,
+    newPage: number,
+  ) => void;
+}
+
+function TablePaginationActions(props: TablePaginationActionsProps) {
+  const theme = useTheme();
+  const { count, page, rowsPerPage, onPageChange } = props;
+
+  const handleFirstPageButtonClick = (
+    event: React.MouseEvent<HTMLButtonElement>,
+  ) => {
+    onPageChange(event, 0);
+  };
+
+  const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onPageChange(event, page - 1);
+  };
+
+  const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onPageChange(event, page + 1);
+  };
+
+  const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
+  };
+
+  return (
+    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
+      <IconButton
+        onClick={handleFirstPageButtonClick}
+        disabled={page === 0}
+        aria-label="first page"
+      >
+        {theme.direction === 'rtl' ? <LastPageIcon /> : <FirstPageIcon />}
+      </IconButton>
+      <IconButton
+        onClick={handleBackButtonClick}
+        disabled={page === 0}
+        aria-label="previous page"
+      >
+        {theme.direction === 'rtl' ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      </IconButton>
+      <IconButton
+        onClick={handleNextButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="next page"
+      >
+        {theme.direction === 'rtl' ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+      </IconButton>
+      <IconButton
+        onClick={handleLastPageButtonClick}
+        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
+        aria-label="last page"
+      >
+        {theme.direction === 'rtl' ? <FirstPageIcon /> : <LastPageIcon />}
+      </IconButton>
+    </Box>
   );
-  
+}
+
     const MoneyTable = ({option} : MoneyTableProps) => {
     const list = useAppSelector(state => option === "Income" ? state.incomeReducer : state.expenseReducer)
     const [search, setSearch] = useState("")
@@ -74,6 +90,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(4);
     const dispatch = useAppDispatch()
+    
     const onDelete = (index: number) => {
       if (option === "Income"){
           dispatch(deleteIncome(index))
@@ -81,103 +98,84 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from
           dispatch(deleteExpense(index))
         }
       }
-  
-    // Avoid a layout jump when reaching the last page with empty rows.
+
+// Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
-      page > 0 ? Math.max(0, (1 + page) * rowsPerPage - list.length) : 0;
-  
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - list.length) : 0;
+
     const handleChangePage = (
       event: React.MouseEvent<HTMLButtonElement> | null,
       newPage: number,
     ) => {
       setPage(newPage);
     };
-  
+
     const handleChangeRowsPerPage = (
       event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     ) => {
       setRowsPerPage(parseInt(event.target.value, 10));
       setPage(0);
     };
-
-    return 
-    (
-      <TableContainer>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Date</TableCell>
-              <TableCell>Title</TableCell>
-              <TableCell>Amount</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {list.map(item =>  (
-              <TableRow key={item.id} >
-                <TableCell>{item.date}</TableCell>
-                <TableCell>{item.title}</TableCell>
-                <TableCell>{item.amount}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    );
-    /* (
+  
+    return(
     <div>
       <div id='search_bar'>
         <label htmlFor="search">Search by title of {option}</label>
         <input type="text" id="serch" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
-      <table aria-label="custom pagination table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Title</th>
-            <th onClick={() => dispatch(sortAmount())}>Amount</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tempList.map((item, index) => (
-            <tr key={item.id} >
-              <td>{item.date}</td>
-              <td style={{ width: 120 }} align="right">{item.title}</td>
-              <td style={{ width: 120 }} align="right">{item.amount}</td>
-              <td onClick={() => onDelete(item.id)} style={{ width: 120 }} align="right">Delete</td>
-            </tr>
+      <TableContainer component={Paper}>
+      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+        <TableHead>
+          <TableRow>
+            <TableCell sx={{ width: "15px" }} align="right">Date</TableCell>
+            <TableCell sx={{ width: "65px" }} align="right">Title</TableCell>
+            <TableCell sx={{ width: "10px" }} align="right">Amount</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+        {list.map(item => (
+            <TableRow key={item.id}>
+              <TableCell component="th" scope="row">
+                {item.date}
+              </TableCell>
+              <TableCell>
+                {item.title}
+              </TableCell>
+              <TableCell>
+                {item.amount}
+              </TableCell>
+            </TableRow>
           ))}
-            {emptyRows > 0 && (
-            <tr style={{ height: 34 * emptyRows }}>
-              <td colSpan={3} />
-            </tr>
+          {emptyRows > 0 && (
+            <TableRow style={{ height: 53 * emptyRows }}>
+              <TableCell colSpan={6} />
+            </TableRow>
           )}
-        </tbody>
-        <tfoot>
-          <tr>
-            <CustomTablePagination
-              rowsPerPageOptions={[4, 8, 12]}
-              colSpan={4}
+        </TableBody>
+        <TableFooter>
+          <TableRow>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
+              colSpan={3}
               count={list.length}
               rowsPerPage={rowsPerPage}
               page={page}
-              slotProps={{
-                select: {
+              SelectProps={{
+                inputProps: {
                   'aria-label': 'rows per page',
                 },
-                actions: {
-                  showFirstButton: true,
-                  showLastButton: true,
-                } as any,
+                native: true,
               }}
               onPageChange={handleChangePage}
               onRowsPerPageChange={handleChangeRowsPerPage}
+              ActionsComponent={TablePaginationActions}
             />
-          </tr>
-        </tfoot>
-      </table>
+          </TableRow>
+        </TableFooter>
+      </Table>
+    </TableContainer>
     </div>
-  ); */
+  );
 }
 
 export default MoneyTable
