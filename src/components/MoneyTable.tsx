@@ -12,6 +12,7 @@ import { deleteIncome, sortAmount } from '../redux/reducers/incomes';
 import { deleteExpense } from '../redux/reducers/expenses';
 import { useAppDispatch, useAppSelector } from '../hooks/ReduxHooks';
 import { useState } from 'react';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
   
  
   const CustomTablePagination = styled(TablePaginationUnstyled)(
@@ -99,7 +100,30 @@ import { useState } from 'react';
       setPage(0);
     };
 
-    return(
+    return 
+    (
+      <TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Date</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Amount</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {list.map(item =>  (
+              <TableRow key={item.id} >
+                <TableCell>{item.date}</TableCell>
+                <TableCell>{item.title}</TableCell>
+                <TableCell>{item.amount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+    /* (
     <div>
       <div id='search_bar'>
         <label htmlFor="search">Search by title of {option}</label>
@@ -153,7 +177,7 @@ import { useState } from 'react';
         </tfoot>
       </table>
     </div>
-  );
+  ); */
 }
 
 export default MoneyTable
