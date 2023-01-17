@@ -127,9 +127,9 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
       <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
         <TableHead>
           <TableRow>
-            <TableCell sx={{ width: "15px" }} align="right">Date</TableCell>
-            <TableCell sx={{ width: "65px" }} align="right">Title</TableCell>
-            <TableCell sx={{ width: "10px" }} align="right">Amount</TableCell>
+            <TableCell>Date</TableCell>
+            <TableCell>Title</TableCell>
+            <TableCell>Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
