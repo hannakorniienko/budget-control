@@ -3,9 +3,7 @@ import { styled } from '@mui/system';
 import TablePaginationUnstyled, {
   tablePaginationUnstyledClasses as classes,
 } from '@mui/base/TablePaginationUnstyled';
-
 import { MoneyItem, MoneyTableProps } from '../types/money'
-import '../styles/table.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { deleteIncome, sortAmount } from '../redux/reducers/incomes';
@@ -16,6 +14,8 @@ import { Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, Ta
 import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
+
+import '../styles/table.css'
   
 interface TablePaginationActionsProps {
   count: number;
@@ -124,7 +124,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
         <input type="text" id="serch" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
       <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+      <Table aria-label="custom pagination table">
         <TableHead>
           <TableRow>
             <TableCell>Date</TableCell>
@@ -134,27 +134,21 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
         </TableHead>
         <TableBody>
         {list.map(item => (
-            <TableRow key={item.id}>
-              <TableCell component="th" scope="row">
-                {item.date}
-              </TableCell>
-              <TableCell>
-                {item.title}
-              </TableCell>
-              <TableCell>
-                {item.amount}
-              </TableCell>
+            <TableRow id="tbl_row" data-title="Click to delete" key={item.id} onClick={() => onDelete(item.id)}>
+              <TableCell>{item.date}</TableCell>
+              <TableCell>{item.title}</TableCell>
+              <TableCell>{item.amount}</TableCell>
             </TableRow>
           ))}
           {emptyRows > 0 && (
             <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
+              <TableCell colSpan={7} />
             </TableRow>
           )}
         </TableBody>
         <TableFooter>
-          <TableRow>
-            <TablePagination
+          <TableRow sx={{ marginLeft: "0px" }}>
+            <TablePagination 
               rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
               colSpan={3}
               count={list.length}

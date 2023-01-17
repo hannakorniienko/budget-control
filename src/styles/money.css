@@ -2,3 +2,17 @@
     padding: 1.5
 }
 
+#tbl_row{
+    position: relative; /* Относительное позиционирование */
+   }
+
+#tbl_row:hover::after{
+    content: attr(data-title);
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; right: 0; top: 5px;
+    z-index: 1; /* Отображаем подсказку поверх других элементов */
+    background: rgba(124, 174, 239, 0.427); /* Полупрозрачный цвет фона */
+    font-family: Arial, sans-serif; /* Гарнитура шрифта */
+    font-size: 15px; /* Размер текста подсказки */
+    width:max-content;
+}
