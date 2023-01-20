@@ -3,16 +3,20 @@
 }
 
 #tbl_row{
-    position: relative; /* Относительное позиционирование */
+    position: relative; 
    }
 
 #tbl_row:hover::after{
     content: attr(data-title);
-    position: absolute; /* Абсолютное позиционирование */
-    left: 0; right: 0; top: 5px;
-    z-index: 1; /* Отображаем подсказку поверх других элементов */
-    background: rgba(124, 174, 239, 0.427); /* Полупрозрачный цвет фона */
-    font-family: Arial, sans-serif; /* Гарнитура шрифта */
-    font-size: 15px; /* Размер текста подсказки */
+    position: absolute; 
+    bottom: 90%;
+    margin-left: -100px;
+    z-index: 1; 
+    background: rgb(112, 112, 112);
+    font-family: Arial, sans-serif; 
+    font-size: 14px;
+    color: white;
     width:max-content;
+    padding: 2px;
+    border-radius: 4px;
 }
