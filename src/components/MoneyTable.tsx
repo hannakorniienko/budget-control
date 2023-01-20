@@ -84,7 +84,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
     const MoneyTable = ({option} : MoneyTableProps) => {
-    const list = useAppSelector(state => option === "Income" ? state.incomeReducer : state.expenseReducer)
+    const list = useAppSelector((state: RootState) => option === "Income" ? state.incomeReducer : state.expenseReducer)
     const [search, setSearch] = useState("")
     const tempList = list.filter((item) => item.title.includes(search))
     const [page, setPage] = useState(0);
@@ -133,7 +133,7 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-        {list.map(item => (
+        {tempList.map(item => (
             <TableRow id="tbl_row" data-title="Click to delete" key={item.id} onClick={() => onDelete(item.id)}>
               <TableCell>{item.date}</TableCell>
               <TableCell>{item.title}</TableCell>

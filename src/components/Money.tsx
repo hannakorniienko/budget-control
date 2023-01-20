@@ -24,8 +24,8 @@ const Money = ({option, balance}: MoneyProps) => {
             if (amount > balance){
                 alert("Insufficient funds")
                 return
-            } 
-        }
+                } 
+            }
             dispatch(addExpense({
                 title, amount, date, id: Date.now()
             }))
