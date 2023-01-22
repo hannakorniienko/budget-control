@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { Box, TextField, Button, List, ListItem, styled } from '@mui/material'
+import React, { useState } from 'react';
+import { Box, TextField, Button, List, ListItem, styled } from '@mui/material';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
-
-import { MoneyProps } from '../types/money'
-import MoneyTable from './MoneyTable';
-import '../styles/money.css'
 import { addExpense } from '../redux/reducers/expenses';
 import { addIncome } from '../redux/reducers/incomes';
 import { useAppDispatch } from '../hooks/ReduxHooks';
+
+import { MoneyProps } from '../types/money';
+import MoneyTable from './MoneyTable';
+import '../styles/money.css';
 
 const Money = ({option, balance}: MoneyProps) => {
     const [title, setTitle] = useState("")

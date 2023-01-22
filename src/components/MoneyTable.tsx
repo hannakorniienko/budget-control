@@ -3,7 +3,6 @@ import { styled } from '@mui/system';
 import TablePaginationUnstyled, {
   tablePaginationUnstyledClasses as classes,
 } from '@mui/base/TablePaginationUnstyled';
-import { MoneyItem, MoneyTableProps } from '../types/money'
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { deleteIncome, sortAmount } from '../redux/reducers/incomes';
@@ -15,6 +14,7 @@ import { KeyboardArrowLeft, KeyboardArrowRight } from '@mui/icons-material';
 import FirstPageIcon from '@mui/icons-material/FirstPage';
 import LastPageIcon from '@mui/icons-material/LastPage';
 
+import { MoneyTableProps } from '../types/money'
 import '../styles/table.css'
   
 interface TablePaginationActionsProps {
