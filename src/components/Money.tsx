@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, List, ListItem, styled } from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import { addExpense } from '../redux/reducers/expenses';
 import { addIncome } from '../redux/reducers/incomes';

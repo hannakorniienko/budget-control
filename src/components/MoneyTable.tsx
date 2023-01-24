@@ -1,9 +1,5 @@
 import * as React from 'react';
 import { styled } from '@mui/system';
-import TablePaginationUnstyled, {
-  tablePaginationUnstyledClasses as classes,
-} from '@mui/base/TablePaginationUnstyled';
-import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { deleteIncome, sortAmount } from '../redux/reducers/incomes';
 import { deleteExpense } from '../redux/reducers/expenses';
