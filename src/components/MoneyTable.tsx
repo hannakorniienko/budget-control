@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { styled } from '@mui/system';
 import { RootState } from '../redux/store';
-import { deleteIncome, sortAmount } from '../redux/reducers/incomes';
+import { deleteIncome } from '../redux/reducers/incomes';
 import { deleteExpense } from '../redux/reducers/expenses';
 import { useAppDispatch, useAppSelector } from '../hooks/ReduxHooks';
 import { useState } from 'react';

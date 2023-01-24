@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { TextField, Box} from '@mui/material'
 
 import '../styles/saving.css'
 import { savingProps } from '../types/saving'
-import { addExpense } from '../redux/reducers/expenses'
-import { useAppDispatch } from '../hooks/ReduxHooks'
-import { useSelector } from 'react-redux'
 
 
 const Saving = ({saving}: savingProps) => {
   const [target, setTarget] = useState(0)
-  const dispatch = useAppDispatch()
-  const incomes = useSelector((state:any) => state.incomeReducer)
-  const expenses = useSelector((state:any) => state.expenseReducer)
   useEffect(() =>{
   }, [])
   const progress = (Math.round(saving/target*100)) || 0
