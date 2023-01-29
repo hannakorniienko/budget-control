@@ -8,12 +8,13 @@ import { useAppDispatch } from '../hooks/ReduxHooks';
 import { MoneyProps } from '../types/money';
 import MoneyTable from './MoneyTable';
 import '../styles/money.css';
+import { useDispatch } from 'react-redux';
 
 const Money = ({option, balance}: MoneyProps) => {
     const [title, setTitle] = useState("")
     const [amount, setAmount] = useState(0)
     const [date, setDate] = useState("")
-    const dispatch = useAppDispatch()
+    const dispatch = useDispatch()
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setTitle("")

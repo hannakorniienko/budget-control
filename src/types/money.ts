@@ -7,6 +7,8 @@ export interface MoneyItem{
 export interface MoneyProps{
     option: "Income"|"Expense",
     balance: number
+    list: MoneyItem[],
+    setList: React.Dispatch<React.SetStateAction<MoneyItem[]>>,
 }
 export interface MoneyTableProps {
     option: string

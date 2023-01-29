@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Grid } from '@mui/material'
 
-import './styles/App.css';
 import Money from './components/Money';
 import Balance from './components/Balance';
 import Saving from './components/Saving';
@@ -21,10 +20,10 @@ function App() {
     <Box className="App" padding={3}>
       <Grid container spacing={2}>
         <Grid item md={4} xs={12}>
-          <Money option='Income' balance={balance} />
+        <Money option='Income' list={incomes} setList={setIncomes} balance={balance} />
         </Grid>
         <Grid item md={4} xs={12}>
-          <Money option='Expense' balance={balance} />
+        <Money option='Expense' list={expenses} setList={setExpenses} balance={balance} />
         </Grid>
         <Grid item md={4} xs={12}>
           <Saving saving={saving} />
